@@ -47,79 +47,210 @@
       -moz-osx-font-smoothing: grayscale;
     }
 
-    .page {
+    ::selection {
+      background: var(--accent);
+      color: var(--surface);
+    }
+
+    a { color: inherit; }
+
+    .container {
       max-width: 640px;
       margin: 0 auto;
-      padding: 96px 32px 128px;
+      padding: 0 32px;
     }
 
     @media (max-width: 600px) {
-      .page { padding: 56px 24px 80px; }
+      .container { padding: 0 24px; }
       html, body { font-size: 16px; }
     }
 
-    /* Eyebrow */
+    /* Top nav */
+    nav.top { padding: 32px 0 0; }
+
+    nav.top .row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--divider);
+    }
+
+    .wordmark {
+      font-family: var(--serif);
+      font-weight: 500;
+      font-size: 22px;
+      letter-spacing: -0.01em;
+      color: var(--text-primary);
+      text-decoration: none;
+    }
+
+    .wordmark em {
+      font-style: italic;
+      color: var(--accent);
+      font-weight: 400;
+    }
+
+    nav.top ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      gap: 28px;
+    }
+
+    nav.top a {
+      font-size: 14px;
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: color 0.15s ease;
+    }
+
+    nav.top a:hover { color: var(--accent); }
+
+    /* Page header */
+    header.page-head {
+      padding: 80px 0 16px;
+    }
+
+    @media (max-width: 600px) {
+      header.page-head { padding: 48px 0 8px; }
+    }
+
     .eyebrow {
       font-family: var(--serif);
       font-style: italic;
       font-weight: 400;
-      font-size: 15px;
+      font-size: 17px;
       color: var(--text-tertiary);
-      margin: 0 0 8px;
-      letter-spacing: 0.01em;
+      margin: 0 0 16px;
     }
 
-    /* Headline */
     h1 {
       font-family: var(--serif);
       font-weight: 400;
-      font-size: clamp(40px, 6vw, 56px);
-      line-height: 1.05;
+      font-size: 44px;
+      line-height: 1.1;
       letter-spacing: -0.02em;
       margin: 0 0 24px;
-      color: var(--text-primary);
     }
 
-    /* Lede */
+    h1 em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    @media (max-width: 600px) {
+      h1 { font-size: 34px; }
+    }
+
+    .effective {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 15px;
+      color: var(--text-tertiary);
+      margin: 0 0 8px;
+    }
+
+    /* Content */
+    main { padding: 24px 0 56px; }
+
     .lede {
       font-size: 19px;
-      line-height: 1.55;
       color: var(--text-secondary);
-      margin: 0 0 64px;
-      max-width: 540px;
+      margin: 0 0 32px;
+      max-width: 56ch;
     }
 
-    /* Section labels — tracked uppercase */
-    h2 {
-      font-family: var(--sans);
-      font-weight: 600;
+    .lede strong {
+      color: var(--text-primary);
+      font-weight: 500;
+    }
+
+    /* Highlight card */
+    .highlight {
+      background: var(--substrate);
+      border: 1px solid var(--divider);
+      border-radius: 14px;
+      padding: 32px;
+      margin: 8px 0 40px;
+    }
+
+    .highlight .label {
       font-size: 11px;
       letter-spacing: 0.18em;
       text-transform: uppercase;
       color: var(--text-tertiary);
-      margin: 56px 0 16px;
-      padding-bottom: 12px;
-      border-bottom: 1px solid var(--divider);
+      margin: 0 0 14px;
+      font-weight: 500;
     }
 
-    h2:first-of-type { margin-top: 0; }
-
-    /* Inline section heads in serif */
-    h3 {
+    .highlight-heading {
       font-family: var(--serif);
-      font-weight: 500;
-      font-size: 22px;
+      font-weight: 400;
+      font-size: 24px;
       line-height: 1.3;
+      color: var(--text-primary);
+      margin: 0 0 8px;
+    }
+
+    .highlight-heading em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .highlight p {
+      margin: 0;
+      color: var(--text-secondary);
+      max-width: none;
+    }
+
+    @media (max-width: 600px) {
+      .highlight { padding: 24px; }
+    }
+
+    /* Sections */
+    section {
+      padding: 32px 0;
+      border-top: 1px solid var(--divider);
+    }
+
+    .label {
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-tertiary);
+      margin: 0 0 18px;
+      font-weight: 500;
+    }
+
+    h2 {
+      font-family: var(--serif);
+      font-weight: 400;
+      font-size: 28px;
+      line-height: 1.2;
       letter-spacing: -0.01em;
-      margin: 32px 0 8px;
+      margin: 0 0 16px;
       color: var(--text-primary);
     }
 
-    h3:first-child { margin-top: 0; }
+    h2 em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    h3 {
+      font-family: var(--serif);
+      font-weight: 500;
+      font-size: 19px;
+      margin: 28px 0 8px;
+      color: var(--text-primary);
+    }
 
     p {
       margin: 0 0 16px;
       color: var(--text-secondary);
+      max-width: 60ch;
     }
 
     p strong {
@@ -127,154 +258,152 @@
       font-weight: 500;
     }
 
-    /* Accent emphasis */
-    .accent {
-      color: var(--accent);
-      font-weight: 500;
-    }
-
-    /* Highlight card — for the headline claim */
-    .claim {
+    code {
+      font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+      font-size: 0.92em;
       background: var(--substrate);
       border: 1px solid var(--divider);
+      padding: 1px 6px;
       border-radius: 4px;
-      padding: 28px 32px;
-      margin: 0 0 8px;
-    }
-
-    .claim p {
-      margin: 0;
-      font-family: var(--serif);
-      font-style: italic;
-      font-size: 22px;
-      line-height: 1.4;
       color: var(--text-primary);
-      letter-spacing: -0.005em;
     }
 
-    @media (max-width: 600px) {
-      .claim { padding: 22px 22px; }
-      .claim p { font-size: 19px; }
-    }
-
-    /* Item list — for "what's stored" */
-    .items {
-      list-style: none;
-      padding: 0;
-      margin: 8px 0 16px;
-    }
-
-    .items li {
-      padding: 14px 0;
-      border-bottom: 1px solid var(--divider);
-      color: var(--text-secondary);
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 4px;
-    }
-
-    .items li:last-child { border-bottom: none; }
-
-    .items .label {
-      font-family: var(--serif);
-      font-style: italic;
-      color: var(--text-primary);
-      font-size: 17px;
-    }
-
-    /* Footer — date + a small flourish */
-    .footer {
-      margin-top: 96px;
-      padding-top: 32px;
+    /* Footer */
+    footer {
+      padding: 48px 0 72px;
       border-top: 1px solid var(--divider);
+      margin-top: 32px;
+    }
+
+    footer .row {
       display: flex;
       justify-content: space-between;
       align-items: baseline;
-      font-size: 13px;
-      color: var(--text-tertiary);
+      flex-wrap: wrap;
+      gap: 16px;
     }
 
-    .footer .mark {
+    footer .mark {
       font-family: var(--serif);
       font-style: italic;
       font-size: 15px;
+      color: var(--text-tertiary);
     }
 
-    /* Subtle reading rhythm — a thin rule between major movements */
-    .rule {
-      height: 1px;
-      background: var(--divider);
-      margin: 64px 0;
-      border: none;
+    footer ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      gap: 24px;
     }
+
+    footer a {
+      font-size: 14px;
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: color 0.15s ease;
+    }
+
+    footer a:hover { color: var(--accent); }
   </style>
 </head>
 <body>
-  <main class="page">
-
-    <p class="eyebrow">A note on privacy</p>
-    <h1>What Moriva knows about you.</h1>
-    <p class="lede">Moriva is a daily ritual app — plan, focus, reflect. The short version of this page is that we don't collect anything from you. The slightly longer version is below.</p>
-
-    <div class="claim">
-      <p>Moriva runs entirely on your device. Your tasks, your journal entries, your focus sessions — they stay on your iPhone. They don't come to us, because there is no <span class="accent">us</span> on the other end.</p>
+  <nav class="top">
+    <div class="container">
+      <div class="row">
+        <a href="index.html" class="wordmark">Mor<em>i</em>va</a>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="support.html">Support</a></li>
+        </ul>
+      </div>
     </div>
+  </nav>
 
-    <h2>What's stored on your device</h2>
-    <p>When you use Moriva, the app keeps a local record of:</p>
-    <ul class="items">
-      <li>
-        <span class="label">Daily records</span>
-        <span>One per calendar day, marking when you used the app.</span>
-      </li>
-      <li>
-        <span class="label">Tasks</span>
-        <span>What you planned, completed, or carried over to a new day.</span>
-      </li>
-      <li>
-        <span class="label">Journal entries</span>
-        <span>Anything you write in the evening reflection.</span>
-      </li>
-      <li>
-        <span class="label">Focus sessions</span>
-        <span>Planned and actual duration, and which task you focused on.</span>
-      </li>
-      <li>
-        <span class="label">Your settings</span>
-        <span>Reflection hour, appearance, notification preferences.</span>
-      </li>
-    </ul>
-    <p>All of it is stored locally using Apple's SwiftData framework. It lives in the app's sandbox on your device. Deleting the app removes it. There is also a <em>Reset all data</em> control inside Settings.</p>
-
-    <h2>What we collect from you</h2>
-    <p><strong>Nothing.</strong> Moriva has no servers, no accounts, no analytics, no telemetry, and no advertising SDKs. The app does not phone home. It does not send your tasks, your journal entries, or any usage data to us or to anyone else.</p>
-    <p>This isn't a promise to handle your data carefully. It's the absence of a place for your data to go.</p>
-
-    <h2>System permissions Moriva uses</h2>
-
-    <h3>Notifications</h3>
-    <p>If you turn on the evening reflection reminder, Moriva schedules a local notification at the hour you choose. These notifications are generated and delivered by your device. They don't pass through any server we operate.</p>
-
-    <h3>Focus &amp; app blocking</h3>
-    <p>If you use focus sessions with app blocking, Moriva uses Apple's Family Controls framework. The list of apps you choose to block is held by the system, not by us — Apple's framework gives Moriva a private, opaque token that it can't read or transmit. We never see which apps you've selected.</p>
-
-    <h2>Third parties</h2>
-    <p>Moriva does not embed third-party SDKs for analytics, advertising, or crash reporting. It does not share data with anyone, because it does not have any data to share.</p>
-    <p>If, in a future version, Moriva ever adds optional sync, crash reporting, or anything else that involves data leaving your device, this page will change first, and the change will be opt-in.</p>
-
-    <h2>Children</h2>
-    <p>Moriva is not directed at children under 13. Because the app collects no information about anyone, no information is collected about children either.</p>
-
-    <h2>Changes to this policy</h2>
-    <p>If this policy changes in any meaningful way, the date below will change too. Material changes will be noted inside the app before they take effect.</p>
-
-    <hr class="rule">
-
-    <div class="footer">
-      <span>Last updated <strong style="color: var(--text-secondary); font-weight: 500;">May 17, 2026</strong></span>
-      <span class="mark">Moriva</span>
+  <header class="page-head">
+    <div class="container">
+      <p class="eyebrow">A short, honest policy.</p>
+      <h1>What Moriva <em>knows</em> about you.</h1>
+      <p class="effective">Effective: May 2026</p>
     </div>
+  </header>
 
+  <main>
+    <div class="container">
+      <p class="lede">Nothing, really. Moriva is built to keep your day to yourself. <strong>Everything you write — tasks, journal entries, focus sessions — stays on your device.</strong> There are no accounts, no servers, and no analytics.</p>
+
+      <div class="highlight">
+        <p class="label">In one sentence</p>
+        <p class="highlight-heading">Moriva sends <em>nothing</em> about you anywhere.</p>
+        <p>No telemetry, no crash reports, no third-party SDKs, no advertising identifiers.</p>
+      </div>
+
+      <section>
+        <p class="label">What's stored</p>
+        <h2>The data <em>on your device</em>.</h2>
+        <p>Moriva uses Apple's SwiftData framework to store your information locally. The records it keeps are exactly what the app shows you:</p>
+        <h3>Days</h3>
+        <p>A <code>DayRecord</code> for each calendar day you've opened the app. It anchors that day's tasks and any journal entry you wrote.</p>
+        <h3>Tasks</h3>
+        <p>The tasks you create, including whether they're complete, the order you put them in, any notes, and whether they were carried forward from a previous day.</p>
+        <h3>Journal entries</h3>
+        <p>Whatever you write in the evening reflection. One entry per day.</p>
+        <h3>Focus sessions</h3>
+        <p>For each focus session you finish, the planned duration, the actual duration, the linked task, and the start time. Nothing is recorded about <em>what</em> you were doing during the session — only that one took place.</p>
+        <h3>Settings</h3>
+        <p>Your preferences (reflection hour, appearance, whether notifications are enabled) are stored in standard iOS user defaults.</p>
+      </section>
+
+      <section>
+        <p class="label">System permissions</p>
+        <h2>What Moriva <em>asks</em> for.</h2>
+        <h3>Notifications</h3>
+        <p>If you turn on the reflection reminder, Moriva schedules a local notification at the hour you choose. The notification is created on your device by iOS — Moriva never sends anything to a server.</p>
+        <h3>Family Controls</h3>
+        <p>If you choose to block apps during a focus session, Moriva uses Apple's Family Controls framework. Apple gives Moriva an opaque token representing your selected apps; the app identities themselves never leave your device.</p>
+      </section>
+
+      <section>
+        <p class="label">What Moriva does not do</p>
+        <h2>The <em>short list</em>.</h2>
+        <p>No accounts. No login. No cloud sync (yet — and when it's added, it will be opt-in, use your iCloud account directly, and be described here before it ships).</p>
+        <p>No analytics. No crash reporting. No telemetry of any kind.</p>
+        <p>No advertising. No ad identifiers. No third-party SDKs.</p>
+        <p>No sharing of your data with anyone, for any reason. There's nothing to share.</p>
+      </section>
+
+      <section>
+        <p class="label">Your control</p>
+        <h2>Erasing <em>everything</em>.</h2>
+        <p>Settings → About → Reset all data permanently deletes every task, journal entry, and focus session on your device. Uninstalling the app does the same. Since nothing is stored off-device, that's all that's needed.</p>
+      </section>
+
+      <section>
+        <p class="label">Children</p>
+        <h2>For users <em>of any age</em>.</h2>
+        <p>Moriva does not knowingly collect any personal information from anyone, regardless of age. The app does not collect personal information at all.</p>
+      </section>
+
+      <section>
+        <p class="label">Changes to this policy</p>
+        <h2>If this <em>ever changes</em>.</h2>
+        <p>If a future version of Moriva starts collecting or transmitting anything — for example, optional iCloud sync — this page will be updated before that version ships, the "Effective" date above will change, and the new behavior will be opt-in.</p>
+      </section>
+
+    </div>
   </main>
+
+  <footer>
+    <div class="container">
+      <div class="row">
+        <p class="mark">Moriva — made with care.</p>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="support.html">Support</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
 </body>
 </html>

@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Support — Moriva</title>
+  <meta name="description" content="Questions, common issues, and how to reach us about Moriva.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --accent:        #6B5BD2;
+      --surface:       #FBFAF7;
+      --substrate:     #FFFFFF;
+      --text-primary:  #1C1B20;
+      --text-secondary:#56535E;
+      --text-tertiary: #908D98;
+      --divider:       #E8E5DE;
+      --serif:  'Fraunces', Georgia, 'Times New Roman', serif;
+      --sans:   'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --accent:        #9B8BFF;
+        --surface:       #16151A;
+        --substrate:     #1E1D23;
+        --text-primary:  #F2F0EA;
+        --text-secondary:#B5B1A9;
+        --text-tertiary: #6B6872;
+        --divider:       #2B2A30;
+      }
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: var(--surface);
+      color: var(--text-primary);
+      font-family: var(--sans);
+      font-size: 17px;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    ::selection {
+      background: var(--accent);
+      color: var(--surface);
+    }
+
+    a { color: inherit; }
+
+    .container {
+      max-width: 640px;
+      margin: 0 auto;
+      padding: 0 32px;
+    }
+
+    @media (max-width: 600px) {
+      .container { padding: 0 24px; }
+      html, body { font-size: 16px; }
+    }
+
+    /* Top nav */
+    nav.top { padding: 32px 0 0; }
+
+    nav.top .row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--divider);
+    }
+
+    .wordmark {
+      font-family: var(--serif);
+      font-weight: 500;
+      font-size: 22px;
+      letter-spacing: -0.01em;
+      color: var(--text-primary);
+      text-decoration: none;
+    }
+
+    .wordmark em {
+      font-style: italic;
+      color: var(--accent);
+      font-weight: 400;
+    }
+
+    nav.top ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      gap: 28px;
+    }
+
+    nav.top a {
+      font-size: 14px;
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: color 0.15s ease;
+    }
+
+    nav.top a:hover { color: var(--accent); }
+
+    /* Header */
+    header.page-head {
+      padding: 80px 0 32px;
+    }
+
+    @media (max-width: 600px) {
+      header.page-head { padding: 48px 0 24px; }
+    }
+
+    .eyebrow {
+      font-family: var(--serif);
+      font-style: italic;
+      font-weight: 400;
+      font-size: 17px;
+      color: var(--text-tertiary);
+      margin: 0 0 16px;
+    }
+
+    h1 {
+      font-family: var(--serif);
+      font-weight: 400;
+      font-size: 44px;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin: 0 0 24px;
+    }
+
+    h1 em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    @media (max-width: 600px) {
+      h1 { font-size: 34px; }
+    }
+
+    .lede {
+      font-size: 18px;
+      color: var(--text-secondary);
+      max-width: 56ch;
+      margin: 0;
+    }
+
+    /* Content blocks */
+    main {
+      padding: 24px 0 56px;
+    }
+
+    .label {
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-tertiary);
+      margin: 56px 0 20px;
+      font-weight: 500;
+    }
+
+    h2 {
+      font-family: var(--serif);
+      font-weight: 400;
+      font-size: 28px;
+      line-height: 1.2;
+      letter-spacing: -0.01em;
+      margin: 0 0 20px;
+      color: var(--text-primary);
+    }
+
+    h2 em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    h3 {
+      font-family: var(--serif);
+      font-weight: 500;
+      font-size: 19px;
+      margin: 32px 0 10px;
+      color: var(--text-primary);
+    }
+
+    p {
+      margin: 0 0 16px;
+      color: var(--text-secondary);
+      max-width: 60ch;
+    }
+
+    p strong {
+      color: var(--text-primary);
+      font-weight: 500;
+    }
+
+    /* FAQ list */
+    .faq {
+      list-style: none;
+      margin: 8px 0 0;
+      padding: 0;
+      border-top: 1px solid var(--divider);
+    }
+
+    .faq li {
+      padding: 24px 0;
+      border-bottom: 1px solid var(--divider);
+    }
+
+    .faq .q {
+      font-family: var(--serif);
+      font-weight: 500;
+      font-size: 18px;
+      color: var(--text-primary);
+      margin: 0 0 8px;
+    }
+
+    .faq .a {
+      color: var(--text-secondary);
+      margin: 0;
+      max-width: none;
+    }
+
+    /* Contact card */
+    .contact {
+      background: var(--substrate);
+      border: 1px solid var(--divider);
+      border-radius: 14px;
+      padding: 32px;
+      margin: 16px 0 0;
+    }
+
+    .contact .label {
+      margin: 0 0 12px;
+    }
+
+    .contact-heading {
+      font-family: var(--serif);
+      font-weight: 400;
+      font-size: 22px;
+      color: var(--text-primary);
+      margin: 0 0 8px;
+    }
+
+    .contact-heading em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .contact a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 500;
+      border-bottom: 1px solid currentColor;
+    }
+
+    @media (max-width: 600px) {
+      .contact { padding: 24px; }
+    }
+
+    /* Footer */
+    footer {
+      padding: 48px 0 72px;
+      border-top: 1px solid var(--divider);
+      margin-top: 32px;
+    }
+
+    footer .row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    footer .mark {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 15px;
+      color: var(--text-tertiary);
+    }
+
+    footer ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      gap: 24px;
+    }
+
+    footer a {
+      font-size: 14px;
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: color 0.15s ease;
+    }
+
+    footer a:hover { color: var(--accent); }
+  </style>
+</head>
+<body>
+  <nav class="top">
+    <div class="container">
+      <div class="row">
+        <a href="index.html" class="wordmark">Mor<em>i</em>va</a>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="privacy.html">Privacy</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="page-head">
+    <div class="container">
+      <p class="eyebrow">Help, when you need it.</p>
+      <h1>Support &amp; <em>questions</em>.</h1>
+      <p class="lede">Moriva is built to be quiet and stay out of the way. When something goes sideways, here's where to look first.</p>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+
+      <p class="label">Common questions</p>
+      <h2>The <em>short answers</em>.</h2>
+
+      <ul class="faq">
+        <li>
+          <p class="q">Where is my data stored?</p>
+          <p class="a">On your device. Moriva does not have servers, accounts, or sync. If you delete the app, your data is gone with it. See the <a href="privacy.html">privacy policy</a> for the full picture.</p>
+        </li>
+        <li>
+          <p class="q">Reflection reminders aren't arriving.</p>
+          <p class="a">Open Settings → Notifications in Moriva and check that the reflection reminder is enabled. If it's already on, open the system Settings app and confirm Moriva is allowed to send notifications. Restarting your phone resolves most stuck-notification cases.</p>
+        </li>
+        <li>
+          <p class="q">How do I change the reflection time?</p>
+          <p class="a">Settings → General → Reflection hour. Changing it reschedules the reminder automatically.</p>
+        </li>
+        <li>
+          <p class="q">Yesterday's unfinished tasks didn't show up today.</p>
+          <p class="a">The rollover sheet appears the first time you open Moriva on a new day. If you closed it, the unfinished tasks stay on their original day rather than carrying over. This is intentional — Moriva treats carryover as a deliberate choice, not an automatic one.</p>
+        </li>
+        <li>
+          <p class="q">Can I plan tomorrow in advance?</p>
+          <p class="a">Not yet. Right now Moriva only lets you plan today. It's a possible direction for a future version.</p>
+        </li>
+        <li>
+          <p class="q">How do I reset everything?</p>
+          <p class="a">Settings → About → Reset all data. This permanently deletes every task, journal entry, and focus session on your device. There is no undo.</p>
+        </li>
+      </ul>
+
+      <p class="label">Still stuck?</p>
+      <div class="contact">
+        <p class="label">Reach out</p>
+        <p class="contact-heading">Get in <em>touch</em>.</p>
+        <p>If you've found a bug, have a suggestion, or just want to share how you use Moriva, email <a href="mailto:support@moriva.app">support@moriva.app</a>. Real human, not a ticketing system.</p>
+      </div>
+
+    </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="row">
+        <p class="mark">Moriva — made with care.</p>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="privacy.html">Privacy</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
