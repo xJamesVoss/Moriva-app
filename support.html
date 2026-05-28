@@ -47,6 +47,24 @@
       -moz-osx-font-smoothing: grayscale;
     }
 
+    /* Grain overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1000;
+      opacity: 0.035;
+      background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.6 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+      mix-blend-mode: multiply;
+    }
+    @media (prefers-color-scheme: dark) {
+      body::before {
+        opacity: 0.06;
+        mix-blend-mode: screen;
+      }
+    }
+
     ::selection {
       background: var(--accent);
       color: var(--surface);
@@ -65,24 +83,26 @@
       html, body { font-size: 16px; }
     }
 
-    /* Top nav */
-    nav.top { padding: 32px 0 0; }
+    /* Masthead */
+    .masthead {
+      position: relative;
+      z-index: 10;
+      padding: 48px 0 0;
+    }
 
-    nav.top .row {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
+    .masthead-wordmark-row {
       padding-bottom: 24px;
-      border-bottom: 1px solid var(--divider);
     }
 
     .wordmark {
       font-family: var(--serif);
       font-weight: 500;
-      font-size: 22px;
-      letter-spacing: -0.01em;
+      font-size: 58px;
+      letter-spacing: -0.03em;
       color: var(--text-primary);
       text-decoration: none;
+      line-height: 0.95;
+      display: inline-block;
     }
 
     .wordmark em {
@@ -91,22 +111,46 @@
       font-weight: 400;
     }
 
-    nav.top ul {
+    @media (max-width: 900px) {
+      .wordmark { font-size: 50px; }
+    }
+
+    @media (max-width: 600px) {
+      .masthead { padding: 32px 0 0; }
+      .wordmark { font-size: 42px; }
+    }
+
+    @media (max-width: 420px) {
+      .wordmark { font-size: 36px; }
+    }
+
+    .masthead-nav-row {
+      border-top: 1px solid var(--divider);
+      padding: 16px 0;
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .masthead-nav-row ul {
       list-style: none;
       margin: 0;
       padding: 0;
       display: flex;
-      gap: 28px;
+      gap: 32px;
     }
 
-    nav.top a {
+    .masthead-nav-row a {
       font-size: 14px;
       color: var(--text-secondary);
       text-decoration: none;
       transition: color 0.15s ease;
     }
 
-    nav.top a:hover { color: var(--accent); }
+    .masthead-nav-row a:hover { color: var(--accent); }
+
+    @media (max-width: 600px) {
+      .masthead-nav-row ul { gap: 24px; }
+    }
 
     /* Header */
     header.page-head {
@@ -304,17 +348,19 @@
   </style>
 </head>
 <body>
-  <nav class="top">
+  <header class="masthead">
     <div class="container">
-      <div class="row">
+      <div class="masthead-wordmark-row">
         <a href="index.html" class="wordmark">Mor<em>i</em>va</a>
+      </div>
+      <div class="masthead-nav-row">
         <ul>
           <li><a href="index.html">Home</a></li>
           <li><a href="privacy.html">Privacy</a></li>
         </ul>
       </div>
     </div>
-  </nav>
+  </header>
 
   <header class="page-head">
     <div class="container">

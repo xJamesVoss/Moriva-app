@@ -11,12 +11,15 @@
   <style>
     :root {
       --accent:        #6B5BD2;
+      --accent-soft:   rgba(107, 91, 210, 0.10);
+      --accent-glow:   rgba(107, 91, 210, 0.18);
       --surface:       #FBFAF7;
       --substrate:     #FFFFFF;
       --text-primary:  #1C1B20;
       --text-secondary:#56535E;
       --text-tertiary: #908D98;
       --divider:       #E8E5DE;
+      --divider-soft:  #F0EDE6;
       --serif:  'Fraunces', Georgia, 'Times New Roman', serif;
       --sans:   'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     }
@@ -24,12 +27,15 @@
     @media (prefers-color-scheme: dark) {
       :root {
         --accent:        #9B8BFF;
+        --accent-soft:   rgba(155, 139, 255, 0.10);
+        --accent-glow:   rgba(155, 139, 255, 0.16);
         --surface:       #16151A;
         --substrate:     #1E1D23;
         --text-primary:  #F2F0EA;
         --text-secondary:#B5B1A9;
         --text-tertiary: #6B6872;
         --divider:       #2B2A30;
+        --divider-soft:  #232228;
       }
     }
 
@@ -45,6 +51,7 @@
       line-height: 1.65;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
     }
 
     ::selection {
@@ -54,38 +61,87 @@
 
     a { color: inherit; }
 
+    /* ---------- Grain overlay ---------- */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1000;
+      opacity: 0.035;
+      background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.6 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+      mix-blend-mode: multiply;
+    }
+    @media (prefers-color-scheme: dark) {
+      body::before {
+        opacity: 0.06;
+        mix-blend-mode: screen;
+      }
+    }
+
+    /* ---------- Aurora bleed (behind hero) ---------- */
+    .aurora {
+      position: absolute;
+      top: -120px;
+      right: -200px;
+      width: 720px;
+      height: 720px;
+      border-radius: 50%;
+      background: radial-gradient(circle at center, var(--accent-glow) 0%, transparent 65%);
+      pointer-events: none;
+      z-index: 0;
+      filter: blur(40px);
+    }
+
+    @media (max-width: 800px) {
+      .aurora {
+        top: 100px;
+        right: -300px;
+        width: 500px;
+        height: 500px;
+      }
+    }
+
     /* ---------- Layout ---------- */
     .container {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 0 40px;
+      position: relative;
+    }
+
+    .container-narrow {
       max-width: 720px;
       margin: 0 auto;
-      padding: 0 32px;
+      padding: 0 40px;
+      position: relative;
     }
 
     @media (max-width: 600px) {
-      .container { padding: 0 24px; }
+      .container, .container-narrow { padding: 0 24px; }
       html, body { font-size: 16px; }
     }
 
-    /* ---------- Top nav ---------- */
-    nav.top {
-      padding: 32px 0 0;
+    /* ---------- Masthead ---------- */
+    .masthead {
+      position: relative;
+      z-index: 10;
+      padding: 48px 0 0;
     }
 
-    nav.top .row {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
+    .masthead-wordmark-row {
       padding-bottom: 24px;
-      border-bottom: 1px solid var(--divider);
     }
 
     .wordmark {
       font-family: var(--serif);
       font-weight: 500;
-      font-size: 22px;
-      letter-spacing: -0.01em;
+      font-size: 76px;
+      letter-spacing: -0.035em;
       color: var(--text-primary);
       text-decoration: none;
+      line-height: 0.95;
+      display: inline-block;
     }
 
     .wordmark em {
@@ -94,50 +150,121 @@
       font-weight: 400;
     }
 
-    nav.top ul {
+    @media (max-width: 900px) {
+      .wordmark { font-size: 62px; }
+    }
+
+    @media (max-width: 600px) {
+      .masthead { padding: 32px 0 0; }
+      .wordmark { font-size: 50px; }
+    }
+
+    @media (max-width: 420px) {
+      .wordmark { font-size: 42px; }
+    }
+
+    .masthead-nav-row {
+      border-top: 1px solid var(--divider);
+      padding: 16px 0;
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .masthead-nav-row ul {
       list-style: none;
       margin: 0;
       padding: 0;
       display: flex;
-      gap: 28px;
+      gap: 36px;
     }
 
-    nav.top a {
+    .masthead-nav-row a {
       font-size: 14px;
       color: var(--text-secondary);
       text-decoration: none;
       transition: color 0.15s ease;
+      letter-spacing: 0.01em;
     }
 
-    nav.top a:hover {
+    .masthead-nav-row a:hover {
       color: var(--accent);
+    }
+
+    @media (max-width: 600px) {
+      .masthead-nav-row ul { gap: 24px; }
     }
 
     /* ---------- Hero ---------- */
     .hero {
-      padding: 88px 0 72px;
+      padding: 96px 0 96px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 1fr;
+      gap: 80px;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    @media (max-width: 900px) {
+      .hero { padding: 64px 0 80px; }
+      .hero-grid {
+        grid-template-columns: 1fr;
+        gap: 72px;
+      }
     }
 
     @media (max-width: 600px) {
-      .hero { padding: 56px 0 48px; }
+      .hero { padding: 48px 0 64px; }
+      .hero-grid { gap: 56px; }
+    }
+
+    /* Type column with vertical accent rule */
+    .hero-type {
+      position: relative;
+      padding-left: 28px;
+    }
+
+    .hero-type::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 8px;
+      bottom: 8px;
+      width: 1px;
+      background: linear-gradient(
+        to bottom,
+        var(--accent) 0%,
+        var(--accent) 30%,
+        var(--divider) 30%,
+        var(--divider) 100%
+      );
+    }
+
+    @media (max-width: 600px) {
+      .hero-type { padding-left: 20px; }
     }
 
     .eyebrow {
       font-family: var(--serif);
       font-style: italic;
       font-weight: 400;
-      font-size: 18px;
+      font-size: 19px;
       color: var(--text-tertiary);
-      margin: 0 0 20px;
+      margin: 0 0 24px;
     }
 
     h1 {
       font-family: var(--serif);
       font-weight: 400;
-      font-size: 56px;
-      line-height: 1.05;
-      letter-spacing: -0.02em;
-      margin: 0 0 28px;
+      font-size: 68px;
+      line-height: 1.0;
+      letter-spacing: -0.025em;
+      margin: 0 0 32px;
       color: var(--text-primary);
     }
 
@@ -146,72 +273,223 @@
       color: var(--accent);
     }
 
+    @media (max-width: 1000px) {
+      h1 { font-size: 58px; }
+    }
+
     @media (max-width: 600px) {
-      h1 { font-size: 40px; }
+      h1 { font-size: 44px; }
+      .eyebrow { font-size: 17px; margin-bottom: 18px; }
     }
 
     .lede {
       font-size: 19px;
-      line-height: 1.55;
+      line-height: 1.6;
       color: var(--text-secondary);
-      max-width: 52ch;
-      margin: 0 0 36px;
+      max-width: 46ch;
+      margin: 0 0 40px;
     }
 
-    /* ---------- Loop diagram ---------- */
+    @media (max-width: 600px) {
+      .lede { font-size: 17px; margin-bottom: 32px; }
+    }
+
+    /* Loop diagram with SVG arrows */
     .loop {
       display: flex;
       align-items: center;
-      gap: 14px;
-      margin: 40px 0 0;
+      gap: 16px;
       font-family: var(--serif);
-      font-size: 20px;
+      font-size: 22px;
       color: var(--text-primary);
+      flex-wrap: wrap;
     }
 
     .loop em {
       font-style: italic;
+      font-weight: 400;
     }
 
-    .loop .sep {
-      color: var(--text-tertiary);
-      font-family: var(--sans);
-      font-size: 14px;
+    .loop svg {
+      flex-shrink: 0;
+      opacity: 0.5;
     }
 
     @media (max-width: 600px) {
-      .loop { font-size: 17px; gap: 10px; }
+      .loop { font-size: 19px; gap: 12px; }
+      .loop svg { width: 24px; height: 8px; }
     }
 
-    /* ---------- Sections ---------- */
-    section {
-      padding: 64px 0;
-      border-top: 1px solid var(--divider);
+    /* ---------- Phone mockup ---------- */
+    .phone-frame {
+      position: relative;
+      width: 100%;
+      max-width: 320px;
+      margin: 0 auto;
+      aspect-ratio: 1 / 2.05;
+      background: var(--substrate);
+      border-radius: 44px;
+      border: 1px solid var(--divider);
+      box-shadow:
+        0 1px 1px rgba(0, 0, 0, 0.04),
+        0 4px 16px rgba(0, 0, 0, 0.04),
+        0 24px 60px -12px rgba(28, 27, 32, 0.18),
+        0 0 0 8px var(--surface),
+        0 0 0 9px var(--divider);
+      padding: 14px;
+      overflow: hidden;
     }
 
-    .label {
+    @media (prefers-color-scheme: dark) {
+      .phone-frame {
+        box-shadow:
+          0 1px 1px rgba(0, 0, 0, 0.4),
+          0 4px 16px rgba(0, 0, 0, 0.3),
+          0 24px 60px -12px rgba(0, 0, 0, 0.6),
+          0 0 0 8px var(--surface),
+          0 0 0 9px var(--divider);
+      }
+    }
+
+    .phone-screen {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      background: var(--surface);
+      border-radius: 32px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Placeholder content — swap for an <img> later */
+    .phone-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 32px 24px;
+      text-align: center;
+      background:
+        linear-gradient(135deg, var(--accent-soft) 0%, transparent 50%),
+        var(--surface);
+    }
+
+    .phone-placeholder .ph-eyebrow {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 13px;
+      color: var(--text-tertiary);
+      margin-bottom: 12px;
+    }
+
+    .phone-placeholder .ph-title {
+      font-family: var(--serif);
+      font-size: 22px;
+      font-weight: 400;
+      letter-spacing: -0.01em;
+      color: var(--text-primary);
+      margin: 0 0 10px;
+      line-height: 1.15;
+    }
+
+    .phone-placeholder .ph-title em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .phone-placeholder .ph-sub {
       font-size: 11px;
+      color: var(--text-tertiary);
       letter-spacing: 0.18em;
       text-transform: uppercase;
+      margin-top: 28px;
+    }
+
+    /* Phone notch */
+    .phone-notch {
+      position: absolute;
+      top: 22px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 92px;
+      height: 28px;
+      background: #000;
+      border-radius: 20px;
+      z-index: 2;
+    }
+
+    /* ---------- Section system ---------- */
+    section {
+      padding: 96px 0;
+      border-top: 1px solid var(--divider);
+      position: relative;
+    }
+
+    @media (max-width: 600px) {
+      section { padding: 64px 0; }
+    }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: 88px 1fr;
+      gap: 24px;
+      align-items: start;
+      margin-bottom: 56px;
+    }
+
+    @media (max-width: 600px) {
+      .section-head {
+        grid-template-columns: 56px 1fr;
+        gap: 16px;
+        margin-bottom: 40px;
+      }
+    }
+
+    .roman {
+      font-family: var(--serif);
+      font-style: italic;
+      font-weight: 400;
+      font-size: 56px;
+      color: var(--accent);
+      line-height: 0.9;
+      letter-spacing: -0.02em;
+    }
+
+    @media (max-width: 600px) {
+      .roman { font-size: 40px; }
+    }
+
+    .section-head .right .label {
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
       color: var(--text-tertiary);
-      margin: 0 0 28px;
+      margin: 12px 0 16px;
       font-weight: 500;
     }
 
-    h2 {
+    .section-head h2 {
       font-family: var(--serif);
       font-weight: 400;
-      font-size: 36px;
-      line-height: 1.15;
-      letter-spacing: -0.015em;
-      margin: 0 0 24px;
+      font-size: 44px;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin: 0;
       color: var(--text-primary);
-      max-width: 22ch;
+      max-width: 18ch;
     }
 
     h2 em {
       font-style: italic;
       color: var(--accent);
+    }
+
+    @media (max-width: 600px) {
+      .section-head h2 { font-size: 32px; }
     }
 
     p {
@@ -225,127 +503,210 @@
       font-weight: 500;
     }
 
-    /* ---------- Principles ---------- */
-    ol.principles {
-      list-style: none;
-      margin: 16px 0 0;
-      padding: 0;
-    }
-
-    ol.principles li {
-      padding: 28px 0;
-      border-bottom: 1px solid var(--divider);
-      display: grid;
-      grid-template-columns: 72px 1fr;
-      gap: 28px;
-      align-items: baseline;
-    }
-
-    ol.principles li:last-child {
-      border-bottom: none;
-    }
-
-    ol.principles .num {
-      font-family: var(--serif);
-      font-style: italic;
-      font-size: 17px;
-      color: var(--accent);
-    }
-
-    ol.principles .body {
-      color: var(--text-primary);
-      font-size: 18px;
-      line-height: 1.5;
-    }
-
-    ol.principles .body em {
-      font-family: var(--serif);
-      font-style: italic;
-      color: var(--text-secondary);
-      display: block;
-      margin-top: 8px;
-      font-size: 15px;
-      font-weight: 400;
-    }
-
-    /* ---------- Loop sections ---------- */
+    /* ---------- Stages ---------- */
     .stages {
-      margin: 8px 0 0;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 0;
+      border-top: 1px solid var(--divider);
+      border-bottom: 1px solid var(--divider);
+    }
+
+    @media (max-width: 800px) {
+      .stages {
+        grid-template-columns: 1fr;
+      }
     }
 
     .stage {
-      padding: 36px 0;
-      border-bottom: 1px solid var(--divider);
+      padding: 40px 32px;
+      border-right: 1px solid var(--divider);
+      position: relative;
     }
 
     .stage:last-child {
-      border-bottom: none;
+      border-right: none;
     }
 
-    .stage .stage-eyebrow {
+    @media (max-width: 800px) {
+      .stage {
+        border-right: none;
+        border-bottom: 1px solid var(--divider);
+        padding: 32px 0;
+      }
+      .stage:last-child { border-bottom: none; }
+    }
+
+    .stage .stage-time {
       font-family: var(--serif);
       font-style: italic;
-      font-size: 15px;
+      font-size: 14px;
       color: var(--accent);
-      margin: 0 0 8px;
+      margin: 0 0 14px;
+      letter-spacing: 0.01em;
     }
 
     .stage h3 {
       font-family: var(--serif);
       font-weight: 500;
-      font-size: 24px;
-      letter-spacing: -0.01em;
-      margin: 0 0 12px;
+      font-size: 28px;
+      letter-spacing: -0.015em;
+      margin: 0 0 14px;
       color: var(--text-primary);
     }
 
     .stage p {
       margin: 0;
-      max-width: 56ch;
+      font-size: 15px;
+      line-height: 1.6;
+      max-width: none;
     }
 
-    /* ---------- CTA block ---------- */
-    .cta {
-      background: var(--substrate);
-      border: 1px solid var(--divider);
-      border-radius: 14px;
-      padding: 40px 36px;
-      margin: 32px 0 0;
+    /* ---------- Principles ---------- */
+    ol.principles {
+      list-style: none;
+      margin: 0;
+      padding: 0;
     }
 
-    .cta .label {
-      margin-bottom: 14px;
+    ol.principles li {
+      padding: 32px 0;
+      border-bottom: 1px solid var(--divider);
+      display: grid;
+      grid-template-columns: 64px 1fr 1fr;
+      gap: 32px;
+      align-items: baseline;
     }
 
-    .cta-heading {
+    ol.principles li:first-child {
+      border-top: 1px solid var(--divider);
+    }
+
+    @media (max-width: 700px) {
+      ol.principles li {
+        grid-template-columns: 48px 1fr;
+        gap: 20px;
+      }
+      ol.principles li .principle-detail {
+        grid-column: 2 / 3;
+        margin-top: -8px;
+      }
+    }
+
+    ol.principles .num {
       font-family: var(--serif);
-      font-weight: 400;
+      font-style: italic;
       font-size: 24px;
+      color: var(--accent);
+      font-weight: 400;
+    }
+
+    ol.principles .body {
+      color: var(--text-primary);
+      font-family: var(--serif);
+      font-size: 22px;
       line-height: 1.3;
       letter-spacing: -0.01em;
-      color: var(--text-primary);
-      margin: 0 0 10px;
+      font-weight: 400;
     }
 
-    .cta-heading em {
+    ol.principles .principle-detail {
+      font-family: var(--serif);
+      font-style: italic;
+      color: var(--text-secondary);
+      font-size: 16px;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 600px) {
+      ol.principles .body { font-size: 19px; }
+      ol.principles .principle-detail { font-size: 15px; }
+    }
+
+    /* ---------- Privacy callout ---------- */
+    .privacy-card {
+      background: var(--substrate);
+      border: 1px solid var(--divider);
+      border-radius: 16px;
+      padding: 48px;
+      margin: 40px 0 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .privacy-card::before {
+      content: '';
+      position: absolute;
+      top: -100px;
+      right: -100px;
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, var(--accent-glow) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .privacy-card .label {
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-tertiary);
+      margin: 0 0 16px;
+      font-weight: 500;
+      position: relative;
+    }
+
+    .privacy-card-heading {
+      font-family: var(--serif);
+      font-weight: 400;
+      font-size: 32px;
+      line-height: 1.2;
+      letter-spacing: -0.015em;
+      color: var(--text-primary);
+      margin: 0 0 12px;
+      max-width: 20ch;
+      position: relative;
+    }
+
+    .privacy-card-heading em {
       font-style: italic;
       color: var(--accent);
     }
 
-    .cta p {
-      margin: 0;
-      font-size: 15px;
+    .privacy-card p {
+      margin: 0 0 24px;
+      font-size: 16px;
+      position: relative;
+      max-width: 50ch;
+    }
+
+    .privacy-link {
+      font-family: var(--sans);
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--accent);
+      text-decoration: none;
+      letter-spacing: 0.02em;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      position: relative;
+      transition: gap 0.2s ease;
+    }
+
+    .privacy-link:hover {
+      gap: 12px;
     }
 
     @media (max-width: 600px) {
-      .cta { padding: 28px 24px; }
+      .privacy-card { padding: 32px 24px; }
+      .privacy-card-heading { font-size: 24px; }
     }
 
     /* ---------- Footer ---------- */
     footer {
-      padding: 56px 0 80px;
+      padding: 64px 0 88px;
       border-top: 1px solid var(--divider);
-      margin-top: 40px;
+      margin-top: 48px;
     }
 
     footer .row {
@@ -353,7 +714,7 @@
       justify-content: space-between;
       align-items: baseline;
       flex-wrap: wrap;
-      gap: 16px;
+      gap: 20px;
     }
 
     footer .mark {
@@ -368,7 +729,7 @@
       margin: 0;
       padding: 0;
       display: flex;
-      gap: 24px;
+      gap: 28px;
     }
 
     footer a {
@@ -384,50 +745,87 @@
   </style>
 </head>
 <body>
-  <nav class="top">
+
+  <header class="masthead">
     <div class="container">
-      <div class="row">
-        <a href="/" class="wordmark">Mor<em>i</em>va</a>
+      <div class="masthead-wordmark-row">
+        <a href="index.html" class="wordmark">Mor<em>i</em>va</a>
+      </div>
+      <div class="masthead-nav-row">
         <ul>
           <li><a href="privacy.html">Privacy</a></li>
           <li><a href="support.html">Support</a></li>
         </ul>
       </div>
     </div>
-  </nav>
+  </header>
 
   <header class="hero">
+    <div class="aurora"></div>
     <div class="container">
-      <p class="eyebrow">A daily ritual, not a to-do list.</p>
-      <h1>One day at a time, made <em>deliberate</em>.</h1>
-      <p class="lede">Moriva is a calm place to plan your day in the morning, focus on what matters, and reflect in the evening. No streaks. No confetti. No nudges that don't earn their place.</p>
-      <div class="loop">
-        <span><em>Plan</em></span>
-        <span class="sep">→</span>
-        <span><em>Focus</em></span>
-        <span class="sep">→</span>
-        <span><em>Reflect</em></span>
+      <div class="hero-grid">
+        <div class="hero-type">
+          <p class="eyebrow">A daily ritual, not a to-do list.</p>
+          <h1>One day at a time, made <em>deliberate</em>.</h1>
+          <p class="lede">Moriva is a calm place to plan your day in the morning, focus on what matters, and reflect in the evening. No streaks. No confetti. No nudges that don't earn their place.</p>
+          <div class="loop">
+            <span><em>Plan</em></span>
+            <svg width="32" height="10" viewBox="0 0 32 10" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M0 5 H28 M22 1 L28 5 L22 9" stroke="currentColor" stroke-width="1" fill="none"/>
+            </svg>
+            <span><em>Focus</em></span>
+            <svg width="32" height="10" viewBox="0 0 32 10" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M0 5 H28 M22 1 L28 5 L22 9" stroke="currentColor" stroke-width="1" fill="none"/>
+            </svg>
+            <span><em>Reflect</em></span>
+          </div>
+        </div>
+
+        <div class="hero-visual">
+          <!-- Phone mockup placeholder. To swap in a real screenshot:
+               replace the entire .phone-placeholder div with:
+               <img src="screenshot.png" alt="Moriva on iPhone"
+                    style="width:100%;height:100%;object-fit:cover;"> -->
+          <div class="phone-frame">
+            <div class="phone-notch"></div>
+            <div class="phone-screen">
+              <div class="phone-placeholder">
+                <p class="ph-eyebrow">Today</p>
+                <p class="ph-title">Tuesday, <em>May 26</em></p>
+                <p class="ph-sub">Screenshot placeholder</p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </header>
 
   <section>
+    <div class="container-narrow">
+      <div class="section-head">
+        <div class="left"><span class="roman">i</span></div>
+        <div class="right">
+          <p class="label">The Loop</p>
+          <h2>Three moments, <em>one day</em>.</h2>
+        </div>
+      </div>
+    </div>
+
     <div class="container">
-      <p class="label">The Loop</p>
-      <h2>Three moments, <em>one day</em>.</h2>
       <div class="stages">
         <div class="stage">
-          <p class="stage-eyebrow">In the morning</p>
+          <p class="stage-time">In the morning</p>
           <h3>Plan</h3>
           <p>Open Moriva and decide what today is for. Add a handful of tasks. Carry forward what's still alive from yesterday — or start fresh. Either is a deliberate choice.</p>
         </div>
         <div class="stage">
-          <p class="stage-eyebrow">Through the day</p>
+          <p class="stage-time">Through the day</p>
           <h3>Focus</h3>
           <p>Pick a task. Pick a length. Work. The timer runs on real-world time, not engagement time, and ending early is just ending — not failure.</p>
         </div>
         <div class="stage">
-          <p class="stage-eyebrow">In the evening</p>
+          <p class="stage-time">In the evening</p>
           <h3>Reflect</h3>
           <p>A quiet nudge invites you back to write a short journal entry. The day closes the way it opened: on purpose.</p>
         </div>
@@ -436,39 +834,62 @@
   </section>
 
   <section>
-    <div class="container">
-      <p class="label">Principles</p>
-      <h2>What Moriva <em>refuses</em> to do.</h2>
+    <div class="container-narrow">
+      <div class="section-head">
+        <div class="left"><span class="roman">ii</span></div>
+        <div class="right">
+          <p class="label">Principles</p>
+          <h2>What Moriva <em>refuses</em> to do.</h2>
+        </div>
+      </div>
+
       <ol class="principles">
         <li>
           <span class="num">i.</span>
-          <span class="body">No streaks.<em>Missing a day shouldn't feel like losing something.</em></span>
+          <span class="body">No streaks.</span>
+          <span class="principle-detail">Missing a day shouldn't feel like losing something.</span>
         </li>
         <li>
           <span class="num">ii.</span>
-          <span class="body">No celebration sounds.<em>You finished a task. You already know.</em></span>
+          <span class="body">No celebration sounds.</span>
+          <span class="principle-detail">You finished a task. You already know.</span>
         </li>
         <li>
           <span class="num">iii.</span>
-          <span class="body">No morning notifications.<em>If you opened the app, it's because you wanted to.</em></span>
+          <span class="body">No morning notifications.</span>
+          <span class="principle-detail">If you opened the app, it's because you wanted to.</span>
         </li>
         <li>
           <span class="num">iv.</span>
-          <span class="body">No accounts. No servers.<em>Your day stays on your device.</em></span>
+          <span class="body">No accounts. No servers.</span>
+          <span class="principle-detail">Your day stays on your device.</span>
         </li>
       </ol>
     </div>
   </section>
 
   <section>
-    <div class="container">
-      <p class="label">Privacy</p>
-      <h2>Stays on <em>your phone</em>.</h2>
+    <div class="container-narrow">
+      <div class="section-head">
+        <div class="left"><span class="roman">iii</span></div>
+        <div class="right">
+          <p class="label">Privacy</p>
+          <h2>Stays on <em>your phone</em>.</h2>
+        </div>
+      </div>
+
       <p>Moriva stores your tasks, journal entries, and focus sessions locally on your device. There are no accounts, no servers, no analytics, and no third parties. Nothing about your day is transmitted anywhere.</p>
-      <div class="cta">
-        <p class="label">Read more</p>
-        <p class="cta-heading">The full <em>privacy policy</em>.</p>
-        <p><a href="privacy.html">A short, plain-English page about exactly what stays on your device and why.</a></p>
+
+      <div class="privacy-card">
+        <p class="label">Read the full policy</p>
+        <p class="privacy-card-heading">A short, <em>plain-English</em> page about what stays on your device.</p>
+        <p>No legalese. No buried clauses. The privacy policy is about the same length as this card.</p>
+        <a href="privacy.html" class="privacy-link">
+          Read it
+          <svg width="14" height="10" viewBox="0 0 14 10" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M0 5 H12 M8 1 L12 5 L8 9" stroke="currentColor" stroke-width="1.2" fill="none"/>
+          </svg>
+        </a>
       </div>
     </div>
   </section>
@@ -484,5 +905,6 @@
       </div>
     </div>
   </footer>
+
 </body>
 </html>
